@@ -24,3 +24,15 @@ Async code or code with Side Effects
 
 
 Keep your SideEffect logic in the Component and Data Component logic in the 
+
+
+## Using an Action Creator Thunk
+We can put the logic of Side effect in the component and the other way is using Action creators which we will
+see now
+
+## What is the Thunk?
+A function that delays an action until later
+An action creator function that does not return the action itself but another function which eventually returns the actions
+
+Redux create its own Action Creator with the same name as of the Reducer
+
