@@ -67,7 +67,9 @@ function App() {
       isInitial = false;
       return;
     }
-    dispatch(sendCartData(cartReducer))
+    if (cartReducer.changed) {
+      dispatch(sendCartData(cartReducer))
+    }
   }, [cartReducer, dispatch]);
 
   useSelector((state) => state.cart)
