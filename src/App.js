@@ -7,13 +7,13 @@ import { useEffect } from 'react';
 // import { UI_ACTION } from './store/ui-slice';
 import Notification from './components/UI/Notification';
 import { Fragment } from 'react';
-import { sendCartData } from './store/cart-slice';
-let isInitial=  true;
+import { fetchCartData, sendCartData } from './store/cart-actions';
+let isInitial = true;
 
 function App() {
   const showCart = useSelector((state) => state.uiReducer.cartIsVisible);
   const cartReducer = useSelector((state) => state.cartReducer);
-  const notification = useSelector((state)=> state.uiReducer.notification);
+  const notification = useSelector((state) => state.uiReducer.notification);
   const dispatch = useDispatch();
 
   // I am commenting this implementation as it is one way of writing the async or side effects its a good approac where we can write the logic in the
@@ -40,7 +40,7 @@ function App() {
   //         message: 'Sent cart data successfully'
   //       }
   //     ));
-      
+
   //     // const reponseData = await response.json();      
   //   }   
 
@@ -57,23 +57,28 @@ function App() {
   //   })
   // }, [cartReducer, dispatch]);
 
-    useEffect(()=> {
-    if(isInitial) {
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    if (isInitial) {
       isInitial = false;
       return;
     }
-      dispatch(sendCartData(cartReducer))
+    dispatch(sendCartData(cartReducer))
   }, [cartReducer, dispatch]);
 
-  useSelector((state)=>state.cart)
+  useSelector((state) => state.cart)
   return (
     <Fragment>
       {notification && <Notification status={notification.status} title={notification.title} message={notification.message} />}
-    <Layout>
-      {showCart && <Cart />}
-      <Products />
-      
-    </Layout>
+      <Layout>
+        {showCart && <Cart />}
+        <Products />
+
+      </Layout>
     </Fragment>
   );
 }
